@@ -37,4 +37,4 @@ Base URL: =/api/v1/apples=
 Swagger UI: http://localhost:8000/docs
 
 * License
-MIT LicenseReadme
+MIT License

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict
@@ -60,4 +62,4 @@ async def bulk_update(records: List[dict]):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0:0:0:0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

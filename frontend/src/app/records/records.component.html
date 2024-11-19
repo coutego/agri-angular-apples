@@ -1,0 +1,27 @@
+<div class="records-container">
+  <h2>Apple Statistics Records</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Marketing Year</th>
+        <th>Area</th>
+        <th>Yield</th>
+        <th>Total Production</th>
+        <th>Usable Production</th>
+        <th>Fresh Production</th>
+        <th>Processed Production</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records">
+        <td>{{ record.marketing_year }}</td>
+        <td>{{ record.area }}</td>
+        <td>{{ record.yield }}</td>
+        <td>{{ record.total_production }}</td>
+        <td>{{ record.usable_production }}</td>
+        <td>{{ record.fresh.production }}</td>
+        <td>{{ record.processed.production }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

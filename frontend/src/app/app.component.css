@@ -1,0 +1,28 @@
+.eu-logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 20px;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.upload-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.upload-container input[type="file"] {
+  margin-top: 10px;
+}
