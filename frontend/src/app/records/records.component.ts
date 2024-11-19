@@ -42,20 +42,24 @@ export class RecordsComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   saveRecords() {
-    this.http.put('/api/v1/apples/records', this.records).subscribe({
+    this.http.put('http://localhost:8000/api/v1/apples/records', this.records).subscribe({
       next: () => {
         console.log('Records saved successfully');
         alert('Records saved successfully');
       },
       error: (error) => {
         console.error('Failed to save records', error);
-        alert('Failed to save records');
+        if (error.status === 0) {
+          alert('Failed to save records: Server is unreachable');
+        } else {
+          alert(`Failed to save records: ${error.message}`);
+        }
       }
     });
   }
 
   ngOnInit() {
-    this.http.get<AppleRecord[]>('/api/v1/apples/records').subscribe({
+    this.http.get<AppleRecord[]>('http://localhost:8000/api/v1/apples/records').subscribe({
       next: (data) => (this.records = data),
       error: (error) => console.error('Failed to fetch records', error)
     });
