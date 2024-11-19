@@ -1,28 +1,33 @@
-.eu-logo {
-  display: block;
-  margin: 0 auto;
-  width: 150px;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #003399;
+  color: white;
+}
+
+.topbar .eu-logo {
+  width: 120px;
   height: auto;
 }
 
-h1 {
+.topbar nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.footer {
   text-align: center;
-  font-size: 2.5rem;
-  margin-top: 20px;
-}
-
-.upload-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.upload-container h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.upload-container input[type="file"] {
-  margin-top: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
