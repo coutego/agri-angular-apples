@@ -177,24 +177,21 @@
   }
 </style>
 
-<main class="main">
+<header class="topbar">
+  <img src="https://commission.europa.eu/themes/contrib/oe_theme/dist/ec/images/logo/positive/logo-ec--en.svg" alt="EU Commission Logo" class="eu-logo" />
   <nav>
     <a routerLink="/upload" routerLinkActive="active">Upload</a>
     <a routerLink="/records" routerLinkActive="active">Records</a>
   </nav>
-  <div class="content">
-    <div class="left-side">
-      <img src="assets/eu-commission-logo.png" alt="EU Commission Logo" class="eu-logo" />
-      <h1>{{ title }}</h1>
-    </div>
-  </div>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
 </main>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<footer class="footer">
+  <p>© 2024 EU Commission - Apple Statistics</p>
+</footer>
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
