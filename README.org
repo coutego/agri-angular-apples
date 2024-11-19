@@ -1,0 +1,40 @@
+#+title: #+TITLE: EU Apple Statistics Demo Application
+#+AUTHOR: AGRI.R.3
+#+DATE: [2024-11-19]
+
+* Overview
+Simple demo application for managing EU apple production statistics through a REST API, using file-based storage.
+
+* Prerequisites
+- Node.js >= 18.x
+- Python >= 3.8
+
+* Quick Start
+** Backend
+#+BEGIN_SRC shell
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install fastapi uvicorn
+python main.py
+#+END_SRC
+
+** Frontend
+#+BEGIN_SRC shell
+cd frontend
+npm install
+ng serve
+#+END_SRC
+
+Application runs at http://localhost:4200
+API endpoint at http://localhost:8000/api/v1/apples
+
+* Storage
+Data persists in =data/apple_stats.json=
+
+* API Documentation
+Base URL: =/api/v1/apples=
+Swagger UI: http://localhost:8000/docs
+
+* License
+MIT LicenseReadme
