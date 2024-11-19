@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UploadComponent } from './upload/upload.component';
@@ -10,7 +11,7 @@ import { routes } from './app.routes';
 
 @NgModule({
   declarations: [AppComponent, UploadComponent, RecordsComponent],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(routes), FormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 <div class="records-container">
   <h2>Apple Statistics Records</h2>
+  <button (click)="addRecord()">Add Record</button>
   <table>
     <thead>
       <tr>
@@ -10,18 +11,21 @@
         <th>Usable Production</th>
         <th>Fresh Production</th>
         <th>Processed Production</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let record of records">
-        <td>{{ record.marketing_year }}</td>
-        <td>{{ record.area }}</td>
-        <td>{{ record.yield }}</td>
-        <td>{{ record.total_production }}</td>
-        <td>{{ record.usable_production }}</td>
-        <td>{{ record.fresh.production }}</td>
-        <td>{{ record.processed.production }}</td>
+      <tr *ngFor="let record of records; let i = index">
+        <td><input [(ngModel)]="record.marketing_year" /></td>
+        <td><input type="number" [(ngModel)]="record.area" /></td>
+        <td><input type="number" [(ngModel)]="record.yield" /></td>
+        <td><input type="number" [(ngModel)]="record.total_production" /></td>
+        <td><input type="number" [(ngModel)]="record.usable_production" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.production" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.production" /></td>
+        <td><button (click)="removeRecord(i)">Remove</button></td>
       </tr>
     </tbody>
   </table>
+  <button (click)="saveRecords()">Save</button>
 </div>
