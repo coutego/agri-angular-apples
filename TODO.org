@@ -3,7 +3,7 @@
 * DONE Remove boilerplate from Angular generated code
 Particularly in frontend/src/app/app.component.html, .ts, etc.
 
-* TODO Move the "Add Record" button to the bottom, close to the "Save" button
+* DONE Move the "Add Record" button to the bottom, close to the "Save" button
 
 * TODO Improve the looks of the table, styling both the table and the buttons
 

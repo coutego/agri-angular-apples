@@ -16,3 +16,10 @@ th {
   background-color: #f2f2f2;
   text-align: left;
 }
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
