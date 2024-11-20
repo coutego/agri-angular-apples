@@ -88,7 +88,7 @@ db: Dict[str, dict] = load_records_from_csv()
 @app.post("/api/v1/apples/upload", status_code=201)
 async def upload_file(file: UploadFile = File(...)):
     if not file.filename.endswith('.csv'):
-        raise HTTPException(status_code=400, detail="Only CSV files are allowed")
+        raise HTTPException(status_code=400, detail={"error": "Only CSV files are allowed"})
     
     content = await file.read()
     logging.info("File upload initiated")
@@ -110,26 +110,162 @@ async def get_all_records():
 @app.get("/api/v1/apples/records/{marketing_year}")
 async def get_record(marketing_year: str):
     if marketing_year not in db:
-        raise HTTPException(status_code=404, detail="Record not found")
+        raise HTTPException(status_code=404, detail={"error": "Record not found"})
     logging.info(f"Fetching record for marketing year: {marketing_year}")
-    logging.info(f"Updating record for marketing year: {marketing_year}")
-    save_records_to_csv(db)
     return db[marketing_year]
 
 @app.put("/api/v1/apples/records/{marketing_year}")
 async def update_record(marketing_year: str, record: dict):
     if marketing_year not in db:
-        raise HTTPException(status_code=404, detail="Record not found")
+        raise HTTPException(status_code=404, detail={"error": "Record not found"})
+    
+    # Validate record structure
+    required_fields = ["area", "yield", "total_production", "losses_and_feed", 
+                      "usable_production", "fresh", "processed", "per_capita_production"]
+    fresh_fields = ["production", "exports", "imports", "consumption", 
+                   "per_capita_production", "ending_stocks", "stock_change", 
+                   "self_sufficiency_rate"]
+    processed_fields = ["production", "exports", "imports", "consumption", 
+                       "per_capita_production", "self_sufficiency_rate"]
+    
+    # Check required top-level fields
+    for field in required_fields:
+        if field not in record:
+            raise HTTPException(status_code=400, 
+                              detail={"error": f"Missing required field: {field}"})
+    
+    # Check fresh market fields
+    if not isinstance(record["fresh"], dict):
+        raise HTTPException(status_code=400, 
+                          detail={"error": "Fresh market data must be an object"})
+    for field in fresh_fields:
+        if field not in record["fresh"]:
+            raise HTTPException(status_code=400, 
+                              detail={"error": f"Missing fresh market field: {field}"})
+    
+    # Check processed market fields
+    if not isinstance(record["processed"], dict):
+        raise HTTPException(status_code=400, 
+                          detail={"error": "Processed market data must be an object"})
+    for field in processed_fields:
+        if field not in record["processed"]:
+            raise HTTPException(status_code=400, 
+                              detail={"error": f"Missing processed market field: {field}"})
+
+    # Validate positive numbers
+    positive_fields = ["area", "yield", "total_production", "losses_and_feed", "usable_production"]
+    for field in positive_fields:
+        if not isinstance(record[field], (int, float)) or record[field] < 0:
+            raise HTTPException(status_code=400,
+                              detail={"error": f"Field {field} must be a positive number"})
+
+    # Validate fresh market positive numbers
+    for field in ["production", "exports", "imports", "consumption", "ending_stocks"]:
+        if not isinstance(record["fresh"][field], (int, float)) or record["fresh"][field] < 0:
+            raise HTTPException(status_code=400,
+                              detail={"error": f"Fresh market {field} must be a positive number"})
+
+    # Validate processed market positive numbers
+    for field in ["production", "exports", "imports", "consumption"]:
+        if not isinstance(record["processed"][field], (int, float)) or record["processed"][field] < 0:
+            raise HTTPException(status_code=400,
+                              detail={"error": f"Processed market {field} must be a positive number"})
+
+    # Business logic validations
+    if record["fresh"]["production"] + record["processed"]["production"] > record["total_production"]:
+        raise HTTPException(status_code=400,
+                          detail={"error": "Sum of fresh and processed production cannot exceed total production"})
+
+    if record["usable_production"] > record["total_production"]:
+        raise HTTPException(status_code=400,
+                          detail={"error": "Usable production cannot exceed total production"})
+
+    if record["losses_and_feed"] > record["total_production"]:
+        raise HTTPException(status_code=400,
+                          detail={"error": "Losses and feed cannot exceed total production"})
+    
     db[marketing_year] = record
+    save_records_to_csv(db)
     return db[marketing_year]
 
 @app.put("/api/v1/apples/records")
 async def bulk_update(records: List[dict]):
     for record in records:
+        # Validate each record using the same validation as single record update
         marketing_year = record.get("marketing_year")
         if not marketing_year:
-            raise HTTPException(status_code=400, detail="Marketing year is required")
+            raise HTTPException(status_code=400, detail={"error": "Marketing year is required"})
+        
+        # Validate record structure
+        required_fields = ["area", "yield", "total_production", "losses_and_feed", 
+                          "usable_production", "fresh", "processed", "per_capita_production"]
+        fresh_fields = ["production", "exports", "imports", "consumption", 
+                       "per_capita_production", "ending_stocks", "stock_change", 
+                       "self_sufficiency_rate"]
+        processed_fields = ["production", "exports", "imports", "consumption", 
+                           "per_capita_production", "self_sufficiency_rate"]
+        
+        # Check required top-level fields
+        for field in required_fields:
+            if field not in record:
+                raise HTTPException(status_code=400, 
+                                  detail={"error": f"Missing required field: {field}"})
+        
+        # Check fresh market fields
+        if not isinstance(record["fresh"], dict):
+            raise HTTPException(status_code=400, 
+                              detail={"error": "Fresh market data must be an object"})
+        for field in fresh_fields:
+            if field not in record["fresh"]:
+                raise HTTPException(status_code=400, 
+                                  detail={"error": f"Missing fresh market field: {field}"})
+        
+        # Check processed market fields
+        if not isinstance(record["processed"], dict):
+            raise HTTPException(status_code=400, 
+                              detail={"error": "Processed market data must be an object"})
+        for field in processed_fields:
+            if field not in record["processed"]:
+                raise HTTPException(status_code=400, 
+                                  detail={"error": f"Missing processed market field: {field}"})
+
+        # Validate positive numbers
+        positive_fields = ["area", "yield", "total_production", "losses_and_feed", "usable_production"]
+        for field in positive_fields:
+            if not isinstance(record[field], (int, float)) or record[field] < 0:
+                raise HTTPException(status_code=400,
+                                  detail={"error": f"Field {field} must be a positive number"})
+
+        # Validate fresh market positive numbers
+        for field in ["production", "exports", "imports", "consumption", "ending_stocks"]:
+            if not isinstance(record["fresh"][field], (int, float)) or record["fresh"][field] < 0:
+                raise HTTPException(status_code=400,
+                                  detail={"error": f"Fresh market {field} must be a positive number"})
+
+        # Validate processed market positive numbers
+        for field in ["production", "exports", "imports", "consumption"]:
+            if not isinstance(record["processed"][field], (int, float)) or record["processed"][field] < 0:
+                raise HTTPException(status_code=400,
+                                  detail={"error": f"Processed market {field} must be a positive number"})
+
+        # Business logic validations
+        fresh_prod = record["fresh"]["production"]
+        proc_prod = record["processed"]["production"]
+        total_prod = record["total_production"]
+        if fresh_prod + proc_prod > total_prod:
+            raise HTTPException(status_code=400,
+                              detail={"error": f"Sum of fresh ({fresh_prod}) and processed ({proc_prod}) production cannot exceed total production ({total_prod})"})
+
+        if record["usable_production"] > record["total_production"]:
+            raise HTTPException(status_code=400,
+                              detail={"error": "Usable production cannot exceed total production"})
+
+        if record["losses_and_feed"] > record["total_production"]:
+            raise HTTPException(status_code=400,
+                              detail={"error": "Losses and feed cannot exceed total production"})
+
         db[marketing_year] = record
+    
     save_records_to_csv(db)
     logging.info("Bulk update of records and saved to CSV")
     return {"message": "Records updated successfully"}

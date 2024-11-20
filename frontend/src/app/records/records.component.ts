@@ -51,8 +51,12 @@ export class RecordsComponent implements OnInit {
         console.error('Failed to save records', error);
         if (error.status === 0) {
           alert('Failed to save records: Server is unreachable');
+        } else if (error.error && error.error.error) {
+          // Handle structured error response from backend with validation details
+          const errorMessage = error.error.error;
+          alert('Validation Error: ' + errorMessage);
         } else {
-          alert(`Failed to save records: ${error.message}`);
+          alert(`Failed to save records: ${error.message || 'Unknown error'}`);
         }
       }
     });
@@ -61,7 +65,16 @@ export class RecordsComponent implements OnInit {
   ngOnInit() {
     this.http.get<AppleRecord[]>('http://localhost:8000/api/v1/apples/records').subscribe({
       next: (data) => (this.records = data),
-      error: (error) => console.error('Failed to fetch records', error)
+      error: (error) => {
+        console.error('Failed to fetch records', error);
+        if (error.status === 0) {
+          alert('Failed to fetch records: Server is unreachable');
+        } else if (error.error && error.error.error) {
+          alert(`Failed to fetch records: ${error.error.error}`);
+        } else {
+          alert(`Failed to fetch records: ${error.message || 'Unknown error'}`);
+        }
+      }
     });
   }
 

@@ -7,10 +7,32 @@
         <th>Area</th>
         <th>Yield</th>
         <th>Total Production</th>
+        <th>Losses and Feed</th>
         <th>Usable Production</th>
-        <th>Fresh Production</th>
-        <th>Processed Production</th>
+        <th colspan="8">Fresh Market</th>
+        <th colspan="6">Processed Market</th>
+        <th>Per Capita Production</th>
         <th>Actions</th>
+      </tr>
+      <tr>
+        <th colspan="6"></th>
+        <!-- Fresh Market columns -->
+        <th>Production</th>
+        <th>Exports</th>
+        <th>Imports</th>
+        <th>Consumption</th>
+        <th>Per Capita</th>
+        <th>Ending Stocks</th>
+        <th>Stock Change</th>
+        <th>Self Sufficiency</th>
+        <!-- Processed Market columns -->
+        <th>Production</th>
+        <th>Exports</th>
+        <th>Imports</th>
+        <th>Consumption</th>
+        <th>Per Capita</th>
+        <th>Self Sufficiency</th>
+        <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
@@ -19,9 +41,25 @@
         <td><input type="number" [(ngModel)]="record.area" /></td>
         <td><input type="number" [(ngModel)]="record.yield" /></td>
         <td><input type="number" [(ngModel)]="record.total_production" /></td>
+        <td><input type="number" [(ngModel)]="record.losses_and_feed" /></td>
         <td><input type="number" [(ngModel)]="record.usable_production" /></td>
+        <!-- Fresh Market inputs -->
         <td><input type="number" [(ngModel)]="record.fresh.production" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.exports" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.imports" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.consumption" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.per_capita_production" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.ending_stocks" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.stock_change" /></td>
+        <td><input type="number" [(ngModel)]="record.fresh.self_sufficiency_rate" /></td>
+        <!-- Processed Market inputs -->
         <td><input type="number" [(ngModel)]="record.processed.production" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.exports" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.imports" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.consumption" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.per_capita_production" /></td>
+        <td><input type="number" [(ngModel)]="record.processed.self_sufficiency_rate" /></td>
+        <td><input type="number" [(ngModel)]="record.per_capita_production" /></td>
         <td><button class="remove-btn" (click)="removeRecord(i)">Remove</button></td>
       </tr>
     </tbody>
