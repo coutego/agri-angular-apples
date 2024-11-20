@@ -1,0 +1,16 @@
+#+title: Todo
+
+* DONE Remove boilerplate from Angular generated code
+Particularly in frontend/src/app/app.component.html, .ts, etc.
+
+* TODO Move the "Add Record" button to the bottom, close to the "Save" button
+
+* TODO Improve the looks of the table, styling both the table and the buttons
+
+* TODO Check that the API (docs/rest-api.md) is coherent and the fields that different methods receive/send are the same when needed
+
+* TODO Check that the UI contains all fields specified in the API (docs/rest-api.md)
+
+* TODO Add better error handling in the backend
+- [ ] Check that all required fields are received
+- [ ] Check that values make sense (quantities that need to be a positive number is a possitive number, that "fresh" + "processed" production is not bigger than "total_production", etc.)
