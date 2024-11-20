@@ -5,7 +5,7 @@ Particularly in frontend/src/app/app.component.html, .ts, etc.
 
 * DONE Move the "Add Record" button to the bottom, close to the "Save" button
 
-* TODO Improve the looks of the table, styling both the table and the buttons
+* DONE Improve the looks of the table, styling both the table and the buttons
 
 * TODO Check that the API (docs/rest-api.md) is coherent and the fields that different methods receive/send are the same when needed
 

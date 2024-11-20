@@ -22,7 +22,7 @@
         <td><input type="number" [(ngModel)]="record.usable_production" /></td>
         <td><input type="number" [(ngModel)]="record.fresh.production" /></td>
         <td><input type="number" [(ngModel)]="record.processed.production" /></td>
-        <td><button (click)="removeRecord(i)">Remove</button></td>
+        <td><button class="remove-btn" (click)="removeRecord(i)">Remove</button></td>
       </tr>
     </tbody>
   </table>
