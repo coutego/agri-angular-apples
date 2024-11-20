@@ -1,4 +1,4 @@
-#+title: #+TITLE: EU Apple Statistics Demo Application
+#+TITLE: EU Apple Statistics Demo Application
 #+AUTHOR: AGRI.R.3
 #+DATE: [2024-11-19]
 
